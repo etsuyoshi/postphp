@@ -1,0 +1,15 @@
+database.sqlに関する注意
+
+sql文には以下のカラムしかないが、
+2014/2/28現在、追加で
+
+
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `datetime` datetime DEFAULT NULL,
+  `rssid` int(11) NOT NULL,#対応する記事のRSSのid
+  `title` text,
+  `url` text,
+  `abstraction` text,
+  `keyward` text,
+  `saveddate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `writtenblog` int(11) NOT NULL,#既にブログにアップされているかどうか
