@@ -275,46 +275,52 @@ function seesaa($title, $text) {
 	$user_id0 = 'skstemi@yahoo.co.jp';
 	$user_pass0 = '1981tysendsan';
 	$blog_id0 = 'skmtnami';
-	if(mt_rand() % 9 == 0){
-		$user_id0 = 'skstemi@yahoo.co.jp';
-		$user_pass0 = '1981tysendsan';
-		$blog_id0 = 'skmtnami';
-	}else if(mt_rand() % 8 == 0){
-		$user_id0 = 'skstemi@yahoo.co.jp';
-		$user_pass0 = '1981tysendsan';
-		$blog_id0 = 'sakashitanami';
-	}else if(mt_rand() % 7 == 0){
-		$user_id0 = 'skstemi@yahoo.co.jp';
-		$user_pass0 = '1981tysendsan';
-		$blog_id0 = 'skstnami';
-	}else if(mt_rand() % 6 == 0){
-		$user_id0 = 'ssaattookkoo2013@yahoo.co.jp';
-		$user_pass0 = 'pswd2005';
-		$blog_id0 = 'satokoss';
-	}else if(mt_rand() % 5 == 0){
-		$user_id0 = 'ssaattookkoo2013@yahoo.co.jp';
-		$user_pass0 = 'pswd2005';
-		$blog_id0 = 'satokossactive';
-	}else if(mt_rand() % 4 == 0){
-		$user_id0 = 'ssaattookkoo2013@yahoo.co.jp';
-		$user_pass0 = 'pswd2005';
-		$blog_id0 = 'bikatu';
-	}else if(mt_rand() % 3 == 0){
-		$user_id0 = 'qkaoqkao@yahoo.co.jp';
-		$user_pass0 = 'asdf2013';
-		$blog_id0 = 'kiiiitttiiiiinnnn';
-	}else if(mt_rand() % 2 == 0){
-		$user_id0 = 'qkaoqkao@yahoo.co.jp';
-		$user_pass0 = 'asdf2013';
-		$blog_id0 = 'eoskeifer';
-	}else{
-		$user_id0 = 'qkaoqkao@yahoo.co.jp';
-		$user_pass0 = 'asdf2013';
-		$blog_id0 = 'zmdkru';
-	}
+
+
+	// if(mt_rand() % 9 == 0){
+	// 	$user_id0 = 'skstemi@yahoo.co.jp';
+	// 	$user_pass0 = '1981tysendsan';
+	// 	$blog_id0 = 'skmtnami';
+	// }else if(mt_rand() % 8 == 0){
+	// 	$user_id0 = 'skstemi@yahoo.co.jp';
+	// 	$user_pass0 = '1981tysendsan';
+	// 	$blog_id0 = 'sakashitanami';
+	// }else if(mt_rand() % 7 == 0){
+	// 	$user_id0 = 'skstemi@yahoo.co.jp';
+	// 	$user_pass0 = '1981tysendsan';
+	// 	$blog_id0 = 'skstnami';
+	// }else if(mt_rand() % 6 == 0){
+	// 	$user_id0 = 'ssaattookkoo2013@yahoo.co.jp';
+	// 	$user_pass0 = 'pswd2005';
+	// 	$blog_id0 = 'satokoss';
+	// }else if(mt_rand() % 5 == 0){
+	// 	$user_id0 = 'ssaattookkoo2013@yahoo.co.jp';
+	// 	$user_pass0 = 'pswd2005';
+	// 	$blog_id0 = 'satokossactive';
+	// }else if(mt_rand() % 4 == 0){
+	// 	$user_id0 = 'ssaattookkoo2013@yahoo.co.jp';
+	// 	$user_pass0 = 'pswd2005';
+	// 	$blog_id0 = 'bikatu';
+	// }else if(mt_rand() % 3 == 0){
+	// 	$user_id0 = 'qkaoqkao@yahoo.co.jp';
+	// 	$user_pass0 = 'asdf2013';
+	// 	$blog_id0 = 'kiiiitttiiiiinnnn';
+	// }else if(mt_rand() % 2 == 0){
+	// 	$user_id0 = 'qkaoqkao@yahoo.co.jp';
+	// 	$user_pass0 = 'asdf2013';
+	// 	$blog_id0 = 'eoskeifer';
+	// }else{
+	// 	$user_id0 = 'qkaoqkao@yahoo.co.jp';
+	// 	$user_pass0 = 'asdf2013';
+	// 	$blog_id0 = 'zmdkru';
+	// }
 
 //github
 //各ブログテスト
+
+	echo "user_id=" . $user_id0 . "<BR>";
+	echo "blog_id=" . $blog_id0 . "<BR>";
+
 
     define('USER_ID', $user_id0);
     define('USER_PASS', $user_pass0);
@@ -322,18 +328,28 @@ function seesaa($title, $text) {
  
     $seesaa_host = "blog.seesaa.jp";
     $seesaa_xmlrpc_path = "/rpc";
- 
+ 	
+ 	echo "start to try at seesaa<BR>";
     try {
+
         $bm = new FC2BlogManager($seesaa_host, $seesaa_xmlrpc_path);
+        echo "BM=" . $bm . "<BR>";
         $bm->setUser(USER_ID);
+        echo "BM=" . $bm . "<BR>";
         $bm->setPassword(USER_PASS);
+        echo "BM=" . $bm . "<BR>";
         $bm->postEntry($title, $text, BLOG_ID);
+        echo "BM=" . $bm . "<BR>";
+
         var_dump($bm->getBlogs());
+
+        echo "finished BM=" . $bm . "<BR>";
     } catch(Exception $e) {
         echo $e->getMessage();
         return 0;
     }
 
+    echo "finished without error at seesaa";
 
     return 1;//成功した場合
 }
@@ -462,12 +478,16 @@ function updateValue($id, $column, $newvalue){
 }
 
 
+
+//fc2
+
 $lastId = makeId();
 $article = makeArticle($lastId);
 $title = $article["title"];
-$text = $article["text"] . "http://xn--wifi-to4c3j9d.jp/";
+$text = $article["text"];
 
-$isSuccessUpdate = fc2($title, $text);
+$isSuccessUpdate = fc2($title, $text);//amebaテスト
+// $isSuccessUpdate = ameba($title, $text);
 echo "isSuccess = " . $isSuccessUpdate;
 if($isSuccessUpdate == 1){
 	echo "is Success updated";
@@ -476,5 +496,51 @@ if($isSuccessUpdate == 1){
 	updateValue($lastId, "ispostblog", 1);
 	echo "<BR>complete update<BR>";
 }
+
+
+
+
+//jugem
+
+$lastId = makeId();
+$article = makeArticle($lastId);
+$title = $article["title"];
+$text = $article["text"];
+
+$isSuccessUpdate = jugem($title, $text);
+// $isSuccessUpdate = ameba($title, $text);//amebaはだめ
+echo "isSuccess = " . $isSuccessUpdate;
+if($isSuccessUpdate == 1){
+	echo "is Success updated";
+	//updateしたことをDBにフラグとして上げる
+	// 即ち$lastIdレコードのispostblogに１を立てる
+	updateValue($lastId, "ispostblog", 1);
+	echo "<BR>complete update<BR>";
+}
+
+
+
+
+
+//seesaa:test中
+
+$lastId = makeId();
+$article = makeArticle($lastId);
+$title = $article["title"];
+$text = $article["text"];
+
+$isSuccessUpdate = seesaa($title, $text);//amebaテスト
+echo "isSuccess = " . $isSuccessUpdate;
+// if($isSuccessUpdate == 1){
+// 	echo "is Success updated";
+// 	//updateしたことをDBにフラグとして上げる
+// 	// 即ち$lastIdレコードのispostblogに１を立てる
+// 	updateValue($lastId, "ispostblog", 1);
+// 	echo "<BR>complete update<BR>";
+// }
+
+
+
+
 
 ?>

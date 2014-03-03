@@ -11,3 +11,7 @@ SELECT * FROM `rss` order by id (asc省略可能)
 
 //まだポストされていないレコードを新しい順番に
 select * from `rss` where abstforblog is not null order by id desc
+
+
+//ポストされていないレコード数をカウント
+SELECT count(*) FROM `rss` WHERE ispostblog = 0 and !(abstforblog is null or abstforblog = "");
