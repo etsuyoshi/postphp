@@ -154,7 +154,7 @@ function updateValue($id, $column, $newvalue){
 $lastId = makeId();
 $article = makeArticle($lastId);
 $title = $article["title"];
-$text = $article["text"];
+$text = $article["text"] . "http://xn--wifi-to4c3j9d.jp/";
 
 $isSuccessUpdate = fc2($title, $text);
 echo "isSuccess = " . $isSuccessUpdate;
