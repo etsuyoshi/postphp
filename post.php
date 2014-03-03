@@ -7,9 +7,38 @@ require_once("./FC2BlogManager.php");
 
 echo "start php<BR>";
 function fc2($title, $text) {
-    define('USER_ID', 'kosodateriko');
-    define('USER_PASS', 'pswd2005');
+
+	$user_id0 = 'sakashitaemi';
+	$user_pass0 = '1981tysendsan';
+
+
+	// if(mt_rand() % 3 == 0){
+	// 	// define('USER_ID', 'kosodateriko');
+ //  //   	define('USER_PASS', 'pswd2005');
+	// 	$user_id0 = 'kosodateriko';
+	// 	$user_pass0 = 'pswd2005';
+	// }else if(mt_rand() % 2 == 0){
+	if(mt_rand() % 2 == 0){//temporary
+		// define('USER_ID', 'sakashitaemi');
+	 //    define('USER_PASS', '1981tysendsan');
+		$user_id0 = 'sakashitaemi';
+		$user_pass0 = '1981tysendsan';
+	}else{
+		// define('USER_ID', 'kanazawa02');
+	 //    define('USER_PASS', 'aassddff2013');
+		$user_id0 = 'kanazawa02';
+		$user_pass0 = 'aassddff2013';
+	}
  
+
+    define('USER_ID', $user_id0);
+    define('USER_PASS', $user_pass0);
+
+
+//  kosodateriko	pswd2005
+//  sakashitaemi	1981tysendsan
+//	satoko2013	pswd2005
+//	kanazawa02	aassddff2013
     $fc2_host = "blog.fc2.com";
     $fc2_xmlrpc_path = "/xmlrpc.php";
     echo "function start.<BR>";
