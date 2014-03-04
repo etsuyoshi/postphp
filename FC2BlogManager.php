@@ -165,10 +165,7 @@ class FC2BlogManager {
         echo "<BR>publish<BR>";
         $publish = new XML_RPC_Value(1, 'boolean');
         echo "<BR>message<BR>";
-        // echo "<BR>blogid=" . $blogid . "<BR>username=" . $username . "<BR>";
-        // echo "<BR>passwd=" . $passwd . "<BR>content=" . $content . "<BR>";
-        // echo "<BR>publish=" . $publish . "<BR>";
-
+        
         $message = new XML_RPC_Message(
                        self::COMMAND_POSTENTRY,
                        array($blogid, $username, $passwd, $content, $publish));
