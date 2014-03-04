@@ -73,18 +73,18 @@ class FC2BlogManager {
     public function __construct($hostname, $script,
                                 $port = self::DEFAULT_PORT){
 
-    echo "hostname=" . $hostname . ", script=" . $script . ", port=" . $port . "<BR>";
+        echo "hostname=" . $hostname . ", script=" . $script . ", port=" . $port . "<BR>";
 
 
         $this->setHostname($hostname);
-echo "hostname complete" . "<BR>";
+        echo "hostname complete" . "<BR>";
         $this->setScript($script);
-echo "script complete" . "<BR>";
+        echo "script complete" . "<BR>";
         $this->setPort($port);
-echo "port complete" . "<BR>";
+        echo "port complete" . "<BR>";
         $this->client =
             new XML_RPC_client($this->script, $this->hostname, $this->port);
-echo "xml_rpc_client complete" . "<BR>";
+        echo "xml_rpc_client complete" . "<BR>";
     }
 
     /**
@@ -118,10 +118,41 @@ echo "xml_rpc_client complete" . "<BR>";
      * @param String $content 投稿するエントリーのコンテンツ
      * @return Integer 投稿したエントリのID
      */
-    public function postEntry($title, $content){
-        $blogid = new XML_RPC_Value( 0, 'string');
+    // public function postEntry($title, $content){
+    //     $blogid = new XML_RPC_Value( 0, 'string');
+    //     $username = $this->createStringValue($this->user);
+    //     $passwd = $this->createStringValue($this->password);
+    //     $content = new XML_RPC_Value(
+    //         array(
+    //             'title'=> $this->createStringValue($title),
+    //             'description'=> $this->createStringValue($content),
+    //             'dateCreated'=>
+    //                 new XML_RPC_Value(date("Ymd\TH:i:s", time()),
+    //                                   'dateTime.iso8601')),
+    //         'struct');
+    //     $publish = new XML_RPC_Value(1, 'boolean');
+    //     $message = new XML_RPC_Message(
+    //                    self::COMMAND_POSTENTRY,
+    //                    array($blogid, $username, $passwd, $content, $publish));
+        
+    //     $result = $this->sendMessage($message);
+    //     return $result;
+    // }
+    public function postEntry($title, $content, $blogid = 0){
+        echo "<BR> post entry<BR>";
+        if ($blogid === 0) {
+            $blogid = new XML_RPC_Value( 0, 'string');
+        } else if ($blogid === '') {
+            $blogid = new XML_RPC_Value( '', 'string');
+        } else {
+            $blogid = new XML_RPC_Value( $blogid, 'string');
+        }
+        echo "<BR>user name<BR>";
         $username = $this->createStringValue($this->user);
+        echo "<BR>passwd<BR>";
         $passwd = $this->createStringValue($this->password);
+
+        echo "<BR>content<BR>";
         $content = new XML_RPC_Value(
             array(
                 'title'=> $this->createStringValue($title),
@@ -130,29 +161,44 @@ echo "xml_rpc_client complete" . "<BR>";
                     new XML_RPC_Value(date("Ymd\TH:i:s", time()),
                                       'dateTime.iso8601')),
             'struct');
+
+        echo "<BR>publish<BR>";
         $publish = new XML_RPC_Value(1, 'boolean');
+        echo "<BR>message<BR>";
+        // echo "<BR>blogid=" . $blogid . "<BR>username=" . $username . "<BR>";
+        // echo "<BR>passwd=" . $passwd . "<BR>content=" . $content . "<BR>";
+        // echo "<BR>publish=" . $publish . "<BR>";
+
         $message = new XML_RPC_Message(
                        self::COMMAND_POSTENTRY,
                        array($blogid, $username, $passwd, $content, $publish));
-        
+         
+        echo "<BR>result<BR>";
         $result = $this->sendMessage($message);
+        echo "<BR>return postentry<BR>";
         return $result;
     }
-
     /**
      * ブログの取得
      * @return Array ブログの情報
      */
     public function getBlogs(){
+        echo "<BR>getBlogs<BR>";
+        echo "<BR>appkey<BR>";
         $appkey = new XML_RPC_Value( '', 'string' );
+
+        echo "<BR>username <BR>";
         $username = new XML_RPC_Value($this->user, 'string' );
+        echo "<BR>passwd<BR>";
         $passwd = new XML_RPC_Value($this->password, 'string' );
-        
+        echo "<BR>message<BR>";
         $message =
             new XML_RPC_Message(self::COMMAND_GETBLOG,
                                 array($appkey, $username, $passwd) );
-        
+        echo "<BR>result<BR>";
         $result = $this->sendMessage($message);
+
+        echo "<BR> finished getblogs<BR>";
         return $result;
     }
 
@@ -162,19 +208,24 @@ echo "xml_rpc_client complete" . "<BR>";
      * @return Array 文字コードが正規化されたサーバーからの応答．
      */
     protected function sendMessage($message){
+        echo "<BR>start sendmessage<BR>";
         if($this->debug){
             echo "メッセージ送信<br>\n";
             var_dump($message);
         }
+        echo "<BR>sendmessage : result<BR>";
         $result = $this->client->send($message);
         
+        echo "<BR>sendmessage : 条件分岐<BR>";
         if(!$result){
+            echo "<BR>sendmessage : 条件分岐1<BR>";
             throw new Exception('Could not connect to the server. ' . $this->hostname . ":" . $this->script);
         }else if( $result->faultCode() ){
+            echo "<BR>sendmessage : 条件分岐2<BR>";
             throw new Exception('XML-RPC fault ('.$result->faultCode().'): '
                                 .$result->faultString());
         }
-
+        echo "<BR>sendmessage : return<BR>";
         return $this->decodeRPCResult($result);
     }
 

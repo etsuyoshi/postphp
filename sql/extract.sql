@@ -1,6 +1,10 @@
 
 //要約アプリから要約文章が送られているが、まだブログにポストされていない記事
-SELECT * FROM `rss` WHERE ispostblog = 0 and !(abstforblog is null and abstforblog = "")
+SELECT * FROM `rss` WHERE ispostblog = 0 and !(abstforblog is null or abstforblog = "")
+
+//ポストされていないレコード数をカウント
+SELECT count(*) FROM `rss` WHERE ispostblog = 0 and !(abstforblog is null or abstforblog = "");
+
 
 //idで降順(大きいものから)に表示
 SELECT * FROM `rss` order by id desc
@@ -13,5 +17,5 @@ SELECT * FROM `rss` order by id (asc省略可能)
 select * from `rss` where abstforblog is not null order by id desc
 
 
-//ポストされていないレコード数をカウント
-SELECT count(*) FROM `rss` WHERE ispostblog = 0 and !(abstforblog is null or abstforblog = "");
+//objective-cプログラムによって更新されていない数字
+select * from `rss` where abstforblog is null or abstforblog = "" order by id desc
